@@ -6,9 +6,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "MainFrame",
+            "name": "Main",
             "request": "launch",
-            "mainClass": "scripts.gui.MainFrame",
+            "mainClass": "scripts.backend.Main",
             "projectName": "unit-8-final-project-mohamed_and_gautham_eadaf32c"
         },
         {
@@ -16,13 +16,6 @@
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "Main",
-            "request": "launch",
-            "mainClass": "Main",
-            "projectName": ""
         }
     ]
 }
