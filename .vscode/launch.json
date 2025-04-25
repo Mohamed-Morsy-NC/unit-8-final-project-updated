@@ -9,7 +9,7 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "scripts.backend.Main",
-            "projectName": "unit-8-final-project-mohamed_and_gautham_eadaf32c"
+            "projectName": ""
         },
         {
             "type": "java",
