@@ -1,8 +1,6 @@
 package scripts.gui;
 
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,17 +37,15 @@ public class MainFrame extends JFrame {
     public void createFrame(Object semaphore) {
         this.setTitle("");
         this.setSize(SCREEN_DIMENSION);
+        JFrame.setDefaultLookAndFeelDecorated(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Set up titlebar
-        this.setUndecorated(true);
-        this.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
-        this.setLayout(new GridBagLayout());
-        JButton exitBtn = new JButton("X");
-        this.add(exitBtn, new GridBagConstraints());
-        this.setLocationRelativeTo(null);
+        UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel());
+        UIManager.setLookAndFeel("org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel");
+        
 
         // Helpful link: https://coderanch.com/t/344113/java/close-minimize-button-frame
+        // https://insubstantial.github.io/insubstantial/substance/docs/getting-started.html
         
 
         addMenuBar();
