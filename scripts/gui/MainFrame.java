@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import org.pushingpixels.substance.api.skin.SubstanceGraphiteAquaLookAndFeel;
+
 public class MainFrame extends JFrame {
     private Dimension SCREEN_DIMENSION = new Dimension(1920, 1080);
     private boolean debugModeOn;
@@ -27,26 +29,30 @@ public class MainFrame extends JFrame {
         panelScreens.add(helpPanel);
     }
 
-    public static void init() {
+    public static void init(MainFrame GUI) {
         System.out.println("Game Frame initialized.");
 
-        MainFrame GUI = new MainFrame();
         SwingUtilities.invokeLater(() -> GUI.createFrame(GUI));
     }
 
     public void createFrame(Object semaphore) {
         this.setTitle("");
         this.setSize(SCREEN_DIMENSION);
-        JFrame.setDefaultLookAndFeelDecorated(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setUndecorated(false);
 
-        UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel());
-        UIManager.setLookAndFeel("org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel");
-        
+        try {
+            
+            UIManager.setLookAndFeel(new SubstanceGraphiteAquaLookAndFeel());
+            UIManager.setLookAndFeel("org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        SwingUtilities.updateComponentTreeUI(this);
 
         // Helpful link: https://coderanch.com/t/344113/java/close-minimize-button-frame
         // https://insubstantial.github.io/insubstantial/substance/docs/getting-started.html
-        
 
         addMenuBar();
 
