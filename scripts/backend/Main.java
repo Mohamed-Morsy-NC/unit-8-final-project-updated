@@ -22,12 +22,13 @@ public class Main {
         }
 
         //https://github.com/vincenzopalazzo/material-ui-swing/wiki/Introduction
-        
+
 
         // try {
         //     UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         // } catch (Exception e) {
         // }
+        //https://stackoverflow.com/questions/2482971/how-to-change-the-color-of-titlebar-in-jframe/49019710#49019710
 
         MainFrame mainFrame = new MainFrame();
         mainFrame.init(mainFrame);
