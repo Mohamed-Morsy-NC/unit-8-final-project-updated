@@ -1,7 +1,7 @@
 package scripts.gui;
 
 import java.awt.Color;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class MainPanel extends JPanel {
 
@@ -11,6 +11,11 @@ public class MainPanel extends JPanel {
 
     public void createMainComponents() {
         this.setBackground(Color.white);
+
+        JButton b = new JButton("test");
+        b.setFocusPainted(false);
+        b.setBackground(Color.white);
+        this.add(b); 
     }
     
 }
