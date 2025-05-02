@@ -3,7 +3,7 @@ package scripts.gui;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -12,24 +12,22 @@ public class MainFrame extends JFrame {
     private boolean debugModeOn;
     private int currentPanelIndex = 0; // 0 is mainPanel
 
-    private ArrayList<JPanel> panelScreens = new ArrayList<>();
-    MainPanel mainPanel = new MainPanel();
-    PausePanel pausePanel = new PausePanel();
-    ReplaysPanel replaysPanel = new ReplaysPanel();
-    GamePanel gamePanel = new GamePanel();
-    HelpPanel helpPanel = new HelpPanel();
+    protected static CopyOnWriteArrayList<JPanel> panelScreens = new CopyOnWriteArrayList<>();
+    static MainPanel mainPanel = new MainPanel();
+    // static PausePanel pausePanel = new PausePanel();
+    // static ReplaysPanel replaysPanel = new ReplaysPanel();
+    // static GamePanel gamePanel = new GamePanel();
+    // static HelpPanel helpPanel = new HelpPanel();
 
     public MainFrame() {
         panelScreens.add(mainPanel);
-        panelScreens.add(pausePanel);
-        panelScreens.add(replaysPanel);
-        panelScreens.add(gamePanel);
-        panelScreens.add(helpPanel);
+        // panelScreens.add(pausePanel);
+        // panelScreens.add(replaysPanel);
+        // panelScreens.add(gamePanel);
+        // panelScreens.add(helpPanel);
     }
 
     public static void init(MainFrame GUI) {
-        System.out.println("Game Frame initialized.");
-
         SwingUtilities.invokeLater(() -> GUI.createFrame(GUI));
     }
 
@@ -37,15 +35,20 @@ public class MainFrame extends JFrame {
         this.setTitle("");
         this.setSize(SCREEN_DIMENSION);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setUndecorated(false);
-        
 
 
         addMenuBar();
 
         // Set up MainPanel
+        // this.setVisible(true);
+        // setVisiblePanel(currentPanelIndex);
+        // System.out.println("CURRENT PANEL INDEX: " + currentPanelIndex);
+
+        mainPanel.createMainComponents();
+        mainPanel.setVisible(true);
+        this.add(mainPanel);
+        
         this.setVisible(true);
-        setVisiblePanel(currentPanelIndex);
 
         // Set up app icon
         try {
@@ -60,45 +63,39 @@ public class MainFrame extends JFrame {
 
     }
 
-    private void setVisiblePanel(int panelIndex) {
-        removeAllPanels();
+    // public static void setVisiblePanel(int panelIndex) {
+    //     removeAllPanels();
 
-        switch (panelIndex) {
-            case 0 -> {
-                this.add(mainPanel);
-                mainPanel.setVisible(true);
-                break;
-            }
-            case 1 -> {
-                this.add(helpPanel);
-                helpPanel.setVisible(true);
-                break;
-            }
-            case 2 -> {
-                this.add(replaysPanel);
-                replaysPanel.setVisible(true);
-                break;
-            }
-            case 3 -> {
-                this.add(gamePanel);
-                gamePanel.setVisible(true);
-                break;
-            }
-            case 4 -> {
-                this.add(pausePanel);
-                pausePanel.setVisible(true);
-                break;
-            }
-            default -> {
-                throw new IllegalArgumentException("No panel is currently visible. Invalid index.");
-            }
-        }
-    }
+    //     switch (panelIndex) {
+    //         case 0 -> {
+    //             mainPanel.setVisible(true);
+    //             break;
+    //         }
+    //         case 1 -> {
+    //             helpPanel.setVisible(true);
+    //             break;
+    //         }
+    //         case 2 -> {
+    //             replaysPanel.setVisible(true);
+    //             break;
+    //         }
+    //         case 3 -> {
+    //             gamePanel.setVisible(true);
+    //             break;
+    //         }
+    //         case 4 -> {
+    //             pausePanel.setVisible(true);
+    //             break;
+    //         }
+    //         default -> {
+    //             throw new IllegalArgumentException("No panel is currently visible. Invalid index.");
+    //         }
+    //     }
+    // }
 
-    private void removeAllPanels() {
+    private static void removeAllPanels() {
         for (JPanel p : panelScreens) {
             p.setVisible(false);
-            this.remove(p);
         }
     }
 

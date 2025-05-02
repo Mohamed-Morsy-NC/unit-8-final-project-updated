@@ -9,6 +9,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
         System.out.println("Game Panel initialized.");
+        
 
         gameBalls.add(new Ball(this, "assets/game_assets/7 ball_vertical.png"));
     }
