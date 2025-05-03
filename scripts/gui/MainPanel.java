@@ -1,55 +1,124 @@
 package scripts.gui;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class MainPanel extends JPanel {
+public class MainPanel extends JPanel implements ActionListener {
     private BufferedImage bgImg;
     private BufferedImage cueStickImg;
 
+    private JButton startBtn;
+    private JButton helpBtn;
+    private JButton exitBtn;
+    //... more later
+
+    private HelpPanel helpPanel = new HelpPanel();
+    private static GamePanel gamePanel = new GamePanel();
+    private static PausePanel pausePanel = new PausePanel();
+    private JPanel menuPanel = new JPanel();
+
+    private static CardLayout cardLayout = new CardLayout();
+    private static JPanel cardPanel = new JPanel(cardLayout);
+    
+
     public void createMainComponents() {
-        this.setLayout(null);
-        this.setBackground(Color.black);
-
-        // JLabel bgLabel = new JLabel(new ImageIcon(bgImg));
-        // bgLabel.setVisible(true);
-        // this.add(bgLabel);
-
-        JButton b = new JButton("Start Game");
-
+        this.setLayout(new BorderLayout());
         
-        // b.addActionListener(() -> new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         MainFrame.setVisiblePanel(3);
-        //     }
-        // });
+        menuPanel.setBackground(Color.green);
+        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
+        cardPanel.add(helpPanel, "Help");
+        cardPanel.add(gamePanel, "Game");
+        cardPanel.add(pausePanel, "Pause");
 
-        b.setBounds(0, 0, 100, 100);
-        b.setBackground(Color.white);
-        b.setVisible(true);
-        
-        this.add(b); 
+        startBtn = createButton("START");
+        helpBtn = createButton("HELP");
+        exitBtn = createButton("QUIT");
 
+        // Align Buttons
+        alignButtons();
+
+        this.add(menuPanel, BorderLayout.WEST);
+        cardPanel.add(menuPanel, "Menu");
+        cardPanel.add(helpPanel, "Help");
+        cardPanel.add(gamePanel, "Game");
+        cardPanel.add(pausePanel, "Pause");
+        this.add(cardPanel, BorderLayout.CENTER);
+        cardLayout.show(cardPanel, "Menu");
     }
 
+    private void alignButtons() {
+        menuPanel.add(Box.createVerticalGlue());
+        menuPanel.add(startBtn);
+        menuPanel.add(Box.createVerticalStrut(15));
+        menuPanel.add(helpBtn);
+        menuPanel.add(Box.createVerticalStrut(15));
+        menuPanel.add(exitBtn);
+        menuPanel.add(Box.createVerticalGlue());   
+    }
 
+    private JButton createButton(String txt) {
+        JButton b = new JButton(txt);
+        b.setFocusPainted(false);
+        b.setBackground(Color.white);
+        b.addActionListener(this);
+        b.setVisible(true);
+        b.setAlignmentX(Component.CENTER_ALIGNMENT);
+        b.setFont(MainFrame.UNIVERSAL_FONT);
+        b.setMaximumSize(MainFrame.UNIVERSAL_BUTTON_DIMENSION_MAX);
+        b.setPreferredSize(MainFrame.UNIVERSAL_BUTTON_DIMENSION_PREFERRED);
+        return b;
+    }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        try {
-            bgImg = ImageIO.read(new File("assets/game_assets/Background Board.png"));   
-            cueStickImg = ImageIO.read(new File("assets/game_assets/Cue Stick.png"));  
-        } catch (Exception e) {
-        }
+        // try {
+        //     bgImg = ImageIO.read(new File("assets/game_assets/Background Board.png"));   
+        //     cueStickImg = ImageIO.read(new File("assets/game_assets/Cue Stick.png"));  
+        // } catch (Exception e) {
+        // }
         
-        g.drawImage(bgImg, 0, 0, this);
-        g.drawImage(cueStickImg, 50, 50, this);
+        // g.drawImage(bgImg, 0, 0, this);
+        // g.drawImage(cueStickImg, 50, 50, this); 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object sourceObject = e.getSource();
+
+        if (sourceObject == exitBtn) {
+            System.exit(0);
+        }
+        else if (sourceObject == startBtn) {
+            cardLayout.show(cardPanel, "Game");
+            System.out.println("Game Panel Active");
+            gamePanel.requestFocusInWindow();
+        }
+        else if (sourceObject == helpBtn) {
+            cardLayout.show(cardPanel, "Help");
+            System.out.println("Help Panel Active");
+        }
+    }
+
+    public static void returnToMain() {
+        cardLayout.show(cardPanel, "Menu");
+    }
+
+    public static void returnToGame() {
+        cardLayout.show(cardPanel, "Game");
+        gamePanel.requestFocusInWindow();
+    }
+
+    public static void goToPause() {
+        cardLayout.show(cardPanel, "Pause");
+        pausePanel.requestFocusInWindow();
     }
     
 }

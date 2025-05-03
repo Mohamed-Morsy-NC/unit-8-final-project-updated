@@ -11,8 +11,16 @@ public class Sprite {
     private Image[] images;
     private int count;
     private int spriteIndex = 0;
+    private int spriteWidth;
+    private int spriteHeight;
+    private int scaleFactor = 10;
     
     public Sprite(String path, int cols, int rows) {
+        setupAnimation(path, cols, rows);
+    }
+
+    private void setupAnimation(String path, int cols, int rows) {
+        spriteIndex=0;
         BufferedImage spriteSheet = null;
 
         try {
@@ -22,17 +30,33 @@ public class Sprite {
             return;
         }
 
-        int spriteWidth = spriteSheet.getWidth() / cols;
-        int spriteHeight = spriteSheet.getHeight() / rows;
+        spriteWidth = spriteSheet.getWidth() / cols;
+        spriteHeight = spriteSheet.getHeight() / rows;
         images = new Image[rows * cols];
 
         for (int i = 0; i < cols; i++) {
             for (int j = 0; j < rows; j++) {
-                images[i + cols * j] = spriteSheet.getSubimage(i * spriteWidth, j * spriteHeight, spriteWidth, spriteHeight);
-            }
+                images[i + cols * j] = spriteSheet.getSubimage(i * spriteWidth, j * spriteHeight, spriteWidth, spriteHeight).getScaledInstance(spriteWidth/scaleFactor, spriteHeight/scaleFactor, Image.SCALE_SMOOTH);
+            }   
         }
 
+        spriteWidth/=scaleFactor;
+        spriteHeight/=scaleFactor;
+
         count = cols * rows;
+    }
+
+    public int getWidth() {
+        return spriteWidth;
+    }
+
+    public int getHeight() {
+        return spriteHeight;
+    }
+
+    public Sprite setAnimState(String imagePath, int cols, int rows) {
+        setupAnimation(imagePath, cols, rows);
+        return this;
     }
 
     public void drawSprite(Graphics g, int index, int x, int y) {

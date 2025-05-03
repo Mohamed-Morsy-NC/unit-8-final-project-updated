@@ -1,31 +1,21 @@
 package scripts.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.CopyOnWriteArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class MainFrame extends JFrame {
-    private Dimension SCREEN_DIMENSION = new Dimension(1920, 1080);
-    private boolean debugModeOn;
-    private int currentPanelIndex = 0; // 0 is mainPanel
-
-    protected static CopyOnWriteArrayList<JPanel> panelScreens = new CopyOnWriteArrayList<>();
+    private final Dimension SCREEN_DIMENSION = new Dimension(1920, 1080);
+    protected static final Dimension UNIVERSAL_BUTTON_DIMENSION_MAX = new Dimension(350, 75);
+    protected static final Dimension UNIVERSAL_BUTTON_DIMENSION_PREFERRED = new Dimension(250, 75);
+    protected static final Font UNIVERSAL_FONT = new Font("Arial", Font.BOLD, 18);
+    public static boolean pauseState = false;
+    protected static boolean debugModeOn = true;
     static MainPanel mainPanel = new MainPanel();
-    // static PausePanel pausePanel = new PausePanel();
-    // static ReplaysPanel replaysPanel = new ReplaysPanel();
-    // static GamePanel gamePanel = new GamePanel();
-    // static HelpPanel helpPanel = new HelpPanel();
-
-    public MainFrame() {
-        panelScreens.add(mainPanel);
-        // panelScreens.add(pausePanel);
-        // panelScreens.add(replaysPanel);
-        // panelScreens.add(gamePanel);
-        // panelScreens.add(helpPanel);
-    }
 
     public static void init(MainFrame GUI) {
         SwingUtilities.invokeLater(() -> GUI.createFrame(GUI));
@@ -34,20 +24,14 @@ public class MainFrame extends JFrame {
     public void createFrame(Object semaphore) {
         this.setTitle("");
         this.setSize(SCREEN_DIMENSION);
+        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-        addMenuBar();
-
-        // Set up MainPanel
-        // this.setVisible(true);
-        // setVisiblePanel(currentPanelIndex);
-        // System.out.println("CURRENT PANEL INDEX: " + currentPanelIndex);
+        this.setLayout(new BorderLayout());
+        // addMenuBar();
 
         mainPanel.createMainComponents();
         mainPanel.setVisible(true);
-        this.add(mainPanel);
-        
+        this.add(mainPanel, BorderLayout.CENTER);
         this.setVisible(true);
 
         // Set up app icon
@@ -58,45 +42,4 @@ public class MainFrame extends JFrame {
         }
 
     }
-
-    private void addMenuBar() {
-
-    }
-
-    // public static void setVisiblePanel(int panelIndex) {
-    //     removeAllPanels();
-
-    //     switch (panelIndex) {
-    //         case 0 -> {
-    //             mainPanel.setVisible(true);
-    //             break;
-    //         }
-    //         case 1 -> {
-    //             helpPanel.setVisible(true);
-    //             break;
-    //         }
-    //         case 2 -> {
-    //             replaysPanel.setVisible(true);
-    //             break;
-    //         }
-    //         case 3 -> {
-    //             gamePanel.setVisible(true);
-    //             break;
-    //         }
-    //         case 4 -> {
-    //             pausePanel.setVisible(true);
-    //             break;
-    //         }
-    //         default -> {
-    //             throw new IllegalArgumentException("No panel is currently visible. Invalid index.");
-    //         }
-    //     }
-    // }
-
-    private static void removeAllPanels() {
-        for (JPanel p : panelScreens) {
-            p.setVisible(false);
-        }
-    }
-
 }
