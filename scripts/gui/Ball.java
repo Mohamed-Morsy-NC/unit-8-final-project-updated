@@ -117,6 +117,14 @@ public class Ball {
         ballSprite = s;
     }
 
+    public void setPosX(int px) {
+        posX = px;
+    }
+
+    public void setPosY(int py) {
+        posY = py;
+    } 
+
     public void drawSprite(Graphics g) {
         ballSprite.drawSprite(g, ballSprite.getSpriteIndex(), posX, posY);
 

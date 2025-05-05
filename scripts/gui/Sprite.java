@@ -16,6 +16,11 @@ public class Sprite {
     private int scaleFactor = 10;
     
     public Sprite(String path, int cols, int rows) {
+        this(path, cols, rows, 10);
+    }
+
+    public Sprite(String path, int cols, int rows, int scaleFactor) {
+        this.scaleFactor = scaleFactor;
         setupAnimation(path, cols, rows);
     }
 
@@ -72,6 +77,10 @@ public class Sprite {
 
     public int getSpriteIndex() {
         return spriteIndex;
+    }
+
+    public void setScaleFactor(int newScale) {
+        this.scaleFactor = newScale;
     }
 
     public void setSpriteIndex(int spriteIndex) {

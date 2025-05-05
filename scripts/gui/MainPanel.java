@@ -7,13 +7,9 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import javax.swing.*;
 
 public class MainPanel extends JPanel implements ActionListener {
-    private BufferedImage bgImg;
-    private BufferedImage cueStickImg;
-
     private JButton startBtn;
     private JButton helpBtn;
     private JButton exitBtn;
@@ -79,14 +75,6 @@ public class MainPanel extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // try {
-        //     bgImg = ImageIO.read(new File("assets/game_assets/Background Board.png"));   
-        //     cueStickImg = ImageIO.read(new File("assets/game_assets/Cue Stick.png"));  
-        // } catch (Exception e) {
-        // }
-        
-        // g.drawImage(bgImg, 0, 0, this);
-        // g.drawImage(cueStickImg, 50, 50, this); 
     }
 
     @Override
