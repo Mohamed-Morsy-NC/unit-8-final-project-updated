@@ -3,7 +3,6 @@ package scripts.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,7 +13,7 @@ public class MainFrame extends JFrame {
     protected static final Dimension UNIVERSAL_BUTTON_DIMENSION_PREFERRED = new Dimension(250, 75);
     protected static final Font UNIVERSAL_FONT = new Font("Arial", Font.BOLD, 18);
     public static boolean pauseState = false;
-    protected static boolean debugModeOn = true;
+    protected static boolean debugModeOn = false;
     static MainPanel mainPanel = new MainPanel();
 
     public static void init(MainFrame GUI) {
@@ -36,10 +35,11 @@ public class MainFrame extends JFrame {
 
         // Set up app icon
         try {
-            this.setIconImage(ImageIO.read(new File("assets/game_assets/8_ball_game_icon.png")));
+            this.setIconImage(ImageIO.read(getClass().getResourceAsStream("/assets/game_assets/8_ball_game_icon.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        GamePanel.startBGMusic();
     }
 }

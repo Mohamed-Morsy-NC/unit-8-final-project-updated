@@ -45,7 +45,7 @@ public class PausePanel extends GameOverPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         System.out.println(e.getKeyCode());
-        if (key == KeyEvent.VK_P) {
+        if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {
             System.out.println("pause on/off");
             updatePauseState();
 

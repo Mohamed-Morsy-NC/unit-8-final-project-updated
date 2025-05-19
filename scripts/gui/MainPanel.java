@@ -13,6 +13,7 @@ public class MainPanel extends JPanel implements ActionListener {
     private JButton startBtn;
     private JButton helpBtn;
     private JButton exitBtn;
+    private JButton debugBtn;
     //... more later
 
     private HelpPanel helpPanel = new HelpPanel();
@@ -36,6 +37,7 @@ public class MainPanel extends JPanel implements ActionListener {
         startBtn = createButton("START");
         helpBtn = createButton("HELP");
         exitBtn = createButton("QUIT");
+        debugBtn = createButton("DEBUG MODE");
 
         // Align Buttons
         alignButtons();
@@ -56,7 +58,10 @@ public class MainPanel extends JPanel implements ActionListener {
         menuPanel.add(helpBtn);
         menuPanel.add(Box.createVerticalStrut(15));
         menuPanel.add(exitBtn);
+         menuPanel.add(Box.createVerticalStrut(15));
+        menuPanel.add(debugBtn);
         menuPanel.add(Box.createVerticalGlue());   
+
     }
 
     private JButton createButton(String txt) {
@@ -88,6 +93,18 @@ public class MainPanel extends JPanel implements ActionListener {
             cardLayout.show(cardPanel, "Game");
             System.out.println("Game Panel Active");
             gamePanel.requestFocusInWindow();
+        }
+        else if (sourceObject == debugBtn) {
+            MainFrame.debugModeOn = !MainFrame.debugModeOn;
+
+            if (MainFrame.debugModeOn) {
+                menuPanel.setBackground(Color.red);
+                menuPanel.repaint();
+            }
+            else {
+                menuPanel.setBackground(Color.green);
+                menuPanel.repaint();
+            }
         }
         else if (sourceObject == helpBtn) {
             cardLayout.show(cardPanel, "Help");
